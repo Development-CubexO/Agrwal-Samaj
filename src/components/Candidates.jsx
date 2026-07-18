@@ -33,7 +33,7 @@ function CandidateCard({ candidate, size = 'large', onSelect, delay = 0 }) {
     <button
       type="button"
       onClick={() => onSelect(candidate)}
-      className="candidate-card fade-up group flex w-full flex-col items-center rounded-2xl border border-gold/35 bg-ivory/70 p-3 text-center shadow-[0_8px_28px_rgba(63,15,26,0.06)] backdrop-blur-sm transition hover:border-gold/70 hover:bg-ivory sm:p-4"
+      className="candidate-card fade-up group flex w-full cursor-pointer flex-col items-center rounded-2xl border border-gold/35 bg-ivory/70 p-3 text-center shadow-[0_8px_28px_rgba(63,15,26,0.06)] backdrop-blur-sm transition hover:border-gold/70 hover:bg-ivory sm:p-4"
       style={{ animationDelay: `${delay}ms` }}
     >
       <div
@@ -167,30 +167,38 @@ export default function Candidates() {
           <PalaceCorners />
           <div className="mb-8">
             <SectionBadge>{t.padadhikariTitle}</SectionBadge>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-5">
               {otherPadadhikari.map((c, i) => (
-                <CandidateCard
+                <div
                   key={c.id}
-                  candidate={c}
-                  size="large"
-                  onSelect={setSelected}
-                  delay={i * 40}
-                />
+                  className="w-[calc((100%-0.75rem)/2)] sm:w-[calc((100%-2.5rem)/3)] lg:w-[calc((100%-3.75rem)/4)]"
+                >
+                  <CandidateCard
+                    candidate={c}
+                    size="large"
+                    onSelect={setSelected}
+                    delay={i * 40}
+                  />
+                </div>
               ))}
             </div>
           </div>
 
           <div className="mb-8">
             <SectionBadge>{t.purushTitle}</SectionBadge>
-            <div className="grid grid-cols-3 gap-2 sm:grid-cols-5 sm:gap-4">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
               {purushKaryakarini.map((c, i) => (
-                <CandidateCard
+                <div
                   key={c.id}
-                  candidate={c}
-                  size="small"
-                  onSelect={setSelected}
-                  delay={i * 30}
-                />
+                  className="w-[calc((100%-1rem)/3)] sm:w-[calc((100%-4rem)/5)]"
+                >
+                  <CandidateCard
+                    candidate={c}
+                    size="small"
+                    onSelect={setSelected}
+                    delay={i * 30}
+                  />
+                </div>
               ))}
             </div>
           </div>
