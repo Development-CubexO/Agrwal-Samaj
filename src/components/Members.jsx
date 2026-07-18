@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
-import { ChevronLeft, ChevronRight, Loader2, Search } from 'lucide-react'
+import {
+  ChevronLeft,
+  ChevronRight,
+  Loader2,
+  Search,
+} from 'lucide-react'
 import { MEMBERS_URL } from '../data/members'
 import { useLanguage } from '../context/LanguageContext'
+import PalaceCorners from './PalaceCorners'
 
 const PAGE_SIZE = 50
 const TYPES = ['ALL', 'SANRAKSHAK', 'AAJIVAN', 'VARSHIK', 'SANSTHAGAT']
@@ -83,51 +89,65 @@ export default function Members() {
   const typeLabel = (key) => t.memberTypes?.[key] || key
 
   return (
-    <section
-      id="members"
-      className="scroll-mt-24 border-t border-maroon/8 bg-ivory-deep/40 px-4 py-16 sm:px-6 sm:py-20"
-    >
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-10 text-center">
-          <h2 className="font-display text-3xl font-semibold text-maroon sm:text-4xl">
+    <section id="members" className="scroll-mt-24 px-4 py-10 sm:px-6 sm:py-12">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="mb-6 text-center">
+          <div className="gold-flourish mb-2">
+            <span className="text-gold">✦</span>
+          </div>
+          <h2 className="font-display text-3xl font-bold text-maroon sm:text-4xl">
             {t.membersTitle}
           </h2>
-          <div className="gold-line mx-auto mt-5 w-28" />
-          <p className="mt-4 text-sm text-ink-muted sm:text-base">{t.membersSubtitle}</p>
+          <div className="gold-line-thick mx-auto mt-4 w-28" />
+          <p className="mt-3 text-sm text-ink-muted sm:text-base">{t.membersSubtitle}</p>
         </div>
 
-        <div className="mb-4 flex flex-wrap justify-center gap-2">
-          {TYPES.map((key) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setTypeFilter(key)}
-              className={`rounded-full px-3.5 py-1.5 text-xs font-semibold tracking-wide transition sm:text-sm ${
-                typeFilter === key
-                  ? 'bg-maroon text-ivory shadow-sm'
-                  : 'border border-maroon/15 bg-ivory text-ink-muted hover:border-gold/50 hover:text-maroon'
-              }`}
-            >
-              {typeLabel(key)}
-              {key !== 'ALL' && typeCounts[key] > 0 && (
-                <span className="ml-1 opacity-70">({typeCounts[key]})</span>
-              )}
-            </button>
-          ))}
-        </div>
+        {/* Search + filters */}
+        <div className="palace-frame relative mb-6 overflow-hidden rounded-3xl border border-gold/45 bg-linear-to-br from-maroon via-maroon to-maroon-deep p-5 shadow-[0_16px_40px_rgba(63,15,26,0.2)] sm:p-6">
+          <PalaceCorners />
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.15]"
+            style={{
+              backgroundImage:
+                "url(\"data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 8 L52 28 L72 32 L56 48 L60 68 L40 58 L20 68 L24 48 L8 32 L28 28 Z' fill='none' stroke='%23c9a227' stroke-width='1'/%3E%3C/svg%3E\")",
+              backgroundSize: '80px 80px',
+            }}
+          />
 
-        <div className="relative mx-auto mb-6 max-w-xl">
-          <Search
-            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gold-deep"
-            size={18}
-          />
-          <input
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={t.searchPlaceholder}
-            className="w-full rounded-full border border-maroon/15 bg-ivory py-3.5 pl-11 pr-4 text-sm text-ink outline-none ring-gold/40 transition placeholder:text-ink-muted/60 focus:border-gold focus:ring-2"
-          />
+          <div className="relative mx-auto max-w-2xl">
+            <div className="relative">
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={t.searchPlaceholder}
+                className="w-full rounded-full border-2 border-gold/55 bg-ivory py-3 pl-5 pr-14 text-sm text-ink outline-none shadow-md transition placeholder:text-ink-muted/55 focus:border-gold focus:ring-4 focus:ring-gold/20 sm:py-3.5 sm:text-base"
+              />
+              <span className="pointer-events-none absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-gold text-maroon-deep">
+                <Search size={16} />
+              </span>
+            </div>
+
+            <div className="mt-4 flex flex-wrap justify-center gap-2">
+              {TYPES.map((key) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setTypeFilter(key)}
+                  className={`rounded-full px-3.5 py-1.5 text-xs font-semibold tracking-wide transition sm:text-sm ${
+                    typeFilter === key
+                      ? 'bg-gold text-maroon-deep shadow-sm'
+                      : 'border border-gold/40 bg-maroon-deep/40 text-ivory/85 hover:border-gold hover:text-gold-light'
+                  }`}
+                >
+                  {typeLabel(key)}
+                  {key !== 'ALL' && typeCounts[key] > 0 && (
+                    <span className="ml-1 opacity-70">({typeCounts[key]})</span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         <p className="mb-4 text-center text-xs text-ink-muted">
@@ -137,21 +157,21 @@ export default function Members() {
         </p>
 
         {error && (
-          <p className="mb-4 rounded-xl border border-maroon/20 bg-ivory py-4 text-center text-sm text-maroon">
+          <p className="mb-4 rounded-2xl border border-maroon/20 bg-ivory py-4 text-center text-sm text-maroon">
             {error}
           </p>
         )}
 
         {loading ? (
-          <div className="flex justify-center py-16 text-maroon">
+          <div className="flex justify-center py-14 text-maroon">
             <Loader2 className="animate-spin" size={32} />
           </div>
         ) : (
           <>
-            <div className="hidden overflow-hidden rounded-2xl border border-maroon/10 bg-ivory shadow-sm md:block">
-              <div className="overflow-x-auto">
+            <div className="hidden h-[100vh] overflow-hidden rounded-2xl border border-gold/40 bg-ivory shadow-[0_12px_40px_rgba(63,15,26,0.08)] md:block">
+              <div className="h-full overflow-auto">
                 <table className="w-full min-w-[780px] text-left text-sm">
-                  <thead>
+                  <thead className="sticky top-0 z-10">
                     <tr className="bg-maroon text-ivory">
                       <th className="px-4 py-3.5 font-semibold">{t.sno}</th>
                       <th className="px-4 py-3.5 font-semibold">{t.mno}</th>
@@ -179,7 +199,7 @@ export default function Members() {
                           <td className="px-4 py-3 text-ink-muted">{m['S.No.']}</td>
                           <td className="px-4 py-3 font-medium text-maroon">{m['M.No.']}</td>
                           <td className="px-4 py-3">
-                            <span className="rounded-full bg-maroon/8 px-2 py-0.5 text-[11px] font-semibold text-maroon-soft">
+                            <span className="rounded-full bg-maroon/8 px-2.5 py-0.5 text-[11px] font-semibold text-maroon-soft">
                               {typeLabel(m.TYPE)}
                             </span>
                           </td>
@@ -207,7 +227,7 @@ export default function Members() {
               </div>
             </div>
 
-            <div className="space-y-3 md:hidden">
+            <div className="h-[100vh] space-y-3 overflow-y-auto md:hidden">
               {pageRows.length === 0 ? (
                 <p className="rounded-2xl border border-maroon/10 bg-ivory py-10 text-center text-ink-muted">
                   {t.noResults}
@@ -218,13 +238,16 @@ export default function Members() {
                     key={m.ID || `${m.TYPE}-${m['S.No.']}-${m['M.No.']}`}
                     type="button"
                     onClick={() => setSelected(m)}
-                    className="w-full rounded-2xl border border-maroon/10 bg-ivory p-4 text-left shadow-sm transition active:scale-[0.99]"
+                    className="w-full rounded-2xl border border-gold/40 bg-ivory p-4 text-left shadow-sm transition active:scale-[0.99]"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <p className="font-semibold text-maroon">{m['VARSHIK MEMBER NAME']}</p>
+                        <p className="font-semibold text-maroon">
+                          {m['VARSHIK MEMBER NAME']}
+                        </p>
                         <p className="mt-1 text-xs text-ink-muted">
-                          {t.mno}: <span className="font-medium text-ink">{m['M.No.']}</span>
+                          {t.mno}:{' '}
+                          <span className="font-medium text-ink">{m['M.No.']}</span>
                           {' · '}
                           {t.sno}: {m['S.No.']}
                         </p>
@@ -236,7 +259,9 @@ export default function Members() {
                     <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-ink-muted">
                       {m.ADDRESS}
                     </p>
-                    <p className="mt-2 text-sm font-medium text-maroon-soft">{m.MOBILE || '—'}</p>
+                    <p className="mt-2 text-sm font-medium text-maroon-soft">
+                      {m.MOBILE || '—'}
+                    </p>
                   </button>
                 ))
               )}
@@ -248,7 +273,7 @@ export default function Members() {
                   type="button"
                   disabled={currentPage <= 1}
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  className="inline-flex items-center gap-1 rounded-full border border-maroon/15 bg-ivory px-4 py-2 text-sm font-medium text-maroon disabled:opacity-40"
+                  className="inline-flex items-center gap-1 rounded-full border border-gold/40 bg-ivory px-5 py-2.5 text-sm font-medium text-maroon disabled:opacity-40"
                 >
                   <ChevronLeft size={16} />
                   {t.prev}
@@ -260,7 +285,7 @@ export default function Members() {
                   type="button"
                   disabled={currentPage >= totalPages}
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  className="inline-flex items-center gap-1 rounded-full border border-maroon/15 bg-ivory px-4 py-2 text-sm font-medium text-maroon disabled:opacity-40"
+                  className="inline-flex items-center gap-1 rounded-full border border-gold/40 bg-ivory px-5 py-2.5 text-sm font-medium text-maroon disabled:opacity-40"
                 >
                   {t.next}
                   <ChevronRight size={16} />
@@ -273,36 +298,39 @@ export default function Members() {
 
       {selected && (
         <div
-          className="modal-backdrop fixed inset-0 z-[60] flex items-end bg-maroon-deep/50 p-0 backdrop-blur-sm sm:items-center sm:justify-center sm:p-6 md:hidden"
+          className="modal-backdrop fixed inset-0 z-[60] flex items-end bg-maroon-deep/55 p-0 backdrop-blur-sm sm:items-center sm:justify-center sm:p-6 md:hidden"
           onClick={() => setSelected(null)}
           role="presentation"
         >
           <div
-            className="modal-panel w-full rounded-t-3xl bg-ivory p-6 shadow-2xl sm:max-w-md sm:rounded-3xl"
+            className="palace-frame modal-panel relative w-full overflow-hidden rounded-t-3xl border border-gold/40 bg-ivory p-6 shadow-2xl sm:max-w-md sm:rounded-3xl"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
           >
+            <PalaceCorners />
             <h3 className="font-display text-2xl font-semibold text-maroon">
               {selected['VARSHIK MEMBER NAME']}
             </h3>
-            <p className="mt-1 text-xs font-semibold text-gold-deep">{typeLabel(selected.TYPE)}</p>
+            <p className="mt-1 text-xs font-semibold tracking-wide text-gold-deep uppercase">
+              {typeLabel(selected.TYPE)}
+            </p>
             <div className="gold-line mt-3 w-16" />
             <dl className="mt-5 space-y-3 text-sm">
               <div>
-                <dt className="text-xs uppercase tracking-wider text-ink-muted">{t.sno}</dt>
+                <dt className="text-xs tracking-wider text-ink-muted uppercase">{t.sno}</dt>
                 <dd className="font-medium text-ink">{selected['S.No.']}</dd>
               </div>
               <div>
-                <dt className="text-xs uppercase tracking-wider text-ink-muted">{t.mno}</dt>
+                <dt className="text-xs tracking-wider text-ink-muted uppercase">{t.mno}</dt>
                 <dd className="font-medium text-ink">{selected['M.No.']}</dd>
               </div>
               <div>
-                <dt className="text-xs uppercase tracking-wider text-ink-muted">{t.address}</dt>
+                <dt className="text-xs tracking-wider text-ink-muted uppercase">{t.address}</dt>
                 <dd className="font-medium leading-relaxed text-ink">{selected.ADDRESS}</dd>
               </div>
               <div>
-                <dt className="text-xs uppercase tracking-wider text-ink-muted">{t.mobile}</dt>
+                <dt className="text-xs tracking-wider text-ink-muted uppercase">{t.mobile}</dt>
                 <dd>
                   {selected.MOBILE ? (
                     <a

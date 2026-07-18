@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+import logo from '../assets/logo.png'
 
 export default function Navbar() {
   const { lang, setLang, t } = useLanguage()
@@ -8,86 +9,89 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => setScrolled(window.scrollY > 16)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   const links = [
     { href: '#home', label: t.navHome },
-    { href: '#about', label: t.navAbout },
     { href: '#candidates', label: t.navCandidates },
+    { href: '#vision', label: t.navVision },
     { href: '#members', label: t.navMembers },
+    { href: '#contact', label: t.navContact },
   ]
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-ivory/95 shadow-[0_8px_30px_rgba(92,26,27,0.08)] backdrop-blur-md'
-          : 'bg-transparent'
+      className={`sticky inset-x-0 top-0 z-50 transition-all duration-500 ${
+        scrolled ? 'glass-nav py-0' : 'glass-nav'
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <a href="#home" className="group flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-maroon text-gold shadow-md ring-1 ring-gold/40 transition group-hover:scale-[1.03]">
-            <span className="font-display text-xl font-bold leading-none">अ</span>
+      <div
+        className={`mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-10 ${
+          scrolled ? 'py-2' : 'py-3'
+        }`}
+      >
+        <a href="#home" className="group flex shrink-0 items-center gap-3">
+          <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-ivory shadow-[0_0_0_2px_rgba(201,162,39,0.55),0_0_0_5px_rgba(201,162,39,0.15),0_10px_24px_rgba(0,0,0,0.3)] transition duration-300 group-hover:scale-[1.05] sm:h-14 sm:w-14">
+            <img src={logo} alt={t.brand} className="h-full w-full object-cover" />
           </div>
-          <div className="leading-tight">
-            <p className="font-display text-lg font-semibold tracking-wide text-maroon sm:text-xl">
+          <div className="hidden leading-tight min-[420px]:block">
+            <p className="font-display text-base font-semibold tracking-wide text-ivory sm:text-lg">
               {t.brand}
             </p>
-            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-gold-deep">
+            <p className="mt-0.5 text-[10px] font-medium tracking-[0.2em] text-gold-light uppercase sm:text-[11px]">
               {t.brandSub}
             </p>
           </div>
         </a>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-0.5 lg:flex">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-ink-muted transition hover:bg-maroon/5 hover:text-maroon"
+              className="nav-link rounded-lg px-3.5 py-2.5 text-[13px] font-medium tracking-wide text-ivory/90 transition hover:text-gold-light"
             >
               {link.label}
             </a>
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <div
-            className="flex items-center rounded-full border border-gold/50 bg-ivory-deep/80 p-0.5 text-xs font-semibold"
+            className="flex items-center rounded-full border border-gold/45 bg-maroon-deep/50 p-0.5 text-xs font-semibold shadow-inner"
             role="group"
             aria-label="Language"
           >
             <button
               type="button"
               onClick={() => setLang('hi')}
-              className={`rounded-full px-3 py-1.5 transition ${
+              className={`rounded-full px-3.5 py-1.5 transition ${
                 lang === 'hi'
-                  ? 'bg-maroon text-ivory shadow-sm'
-                  : 'text-ink-muted hover:text-maroon'
+                  ? 'bg-gold text-maroon-deep shadow-sm'
+                  : 'text-ivory/80 hover:text-gold-light'
               }`}
             >
-              हिन्दी
+              {t.langHi}
             </button>
             <button
               type="button"
               onClick={() => setLang('en')}
-              className={`rounded-full px-3 py-1.5 transition ${
+              className={`rounded-full px-3.5 py-1.5 transition ${
                 lang === 'en'
-                  ? 'bg-maroon text-ivory shadow-sm'
-                  : 'text-ink-muted hover:text-maroon'
+                  ? 'bg-ivory text-maroon shadow-sm'
+                  : 'text-ivory/80 hover:text-gold-light'
               }`}
             >
-              EN
+              {t.langEn}
             </button>
           </div>
 
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-maroon/15 text-maroon md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-gold/40 bg-maroon-deep/30 text-ivory transition hover:border-gold/70 hover:bg-gold/10 lg:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-label="Menu"
           >
@@ -97,14 +101,14 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="border-t border-maroon/10 bg-ivory/98 px-4 py-3 backdrop-blur-md md:hidden">
+        <div className="border-t border-gold/30 bg-maroon-deep/98 px-4 py-4 backdrop-blur-xl lg:hidden">
           <nav className="flex flex-col gap-1">
             {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-ink-muted hover:bg-maroon/5 hover:text-maroon"
+                className="rounded-xl px-4 py-3 text-sm font-medium text-ivory/90 transition hover:bg-gold/15 hover:text-gold-light"
               >
                 {link.label}
               </a>
