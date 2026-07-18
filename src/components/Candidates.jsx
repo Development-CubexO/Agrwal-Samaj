@@ -78,7 +78,7 @@ export default function Candidates() {
     <section id="candidates" className="scroll-mt-24 px-3 py-10 sm:px-6 sm:py-14">
       <div className="mx-auto max-w-[1200px]">
         <div className="mb-8 text-center fade-up sm:mb-10">
-          <p className="section-ornament mb-3 justify-center">Panel 2026</p>
+          <p className="section-ornament mb-3 justify-center">{t.candidatesSubtitle}</p>
           <div className="gold-flourish mb-2">
             <span className="text-gold">✦</span>
           </div>
@@ -86,7 +86,7 @@ export default function Candidates() {
             {t.candidatesTitle}
           </h2>
           <div className="gold-line-thick mx-auto mt-4 w-36" />
-          <p className="mt-3 text-sm text-ink-muted sm:text-base">{t.candidatesSubtitle}</p>
+          {/* <p className="mt-3 text-sm text-ink-muted sm:text-base">{t.candidatesSubtitle}</p> */}
         </div>
 
         {/* Featured President */}

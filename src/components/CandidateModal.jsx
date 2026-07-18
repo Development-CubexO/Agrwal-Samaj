@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Phone, X } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import PalaceCorners from './PalaceCorners'
+import mandala from '../assets/background-mandala.png'
 
 export default function CandidateModal({ candidate, onClose }) {
   const { lang, t } = useLanguage()
@@ -32,40 +33,35 @@ export default function CandidateModal({ candidate, onClose }) {
         aria-labelledby="candidate-name"
       >
         <PalaceCorners />
-        <div
-          className="relative px-6 pb-8 pt-10 text-center text-ivory"
-          style={{ background: candidate.color }}
-        >
-          <div
-            className="pointer-events-none absolute inset-0 opacity-15"
-            style={{
-              backgroundImage:
-                "url(\"data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='30' fill='none' stroke='%23c9a227' stroke-width='1'/%3E%3C/svg%3E\")",
-              backgroundSize: '80px 80px',
-            }}
+        <div className="relative overflow-hidden bg-maroon px-6 pb-8 pt-10 text-center text-ivory">
+          <img
+            src={mandala}
+            alt=""
+            className="mandala-spin pointer-events-none absolute left-1/2 top-1/2 h-[280px] w-[280px] -translate-x-1/2 -translate-y-1/2 opacity-25"
           />
+
           <button
             type="button"
             onClick={onClose}
-            className="absolute right-4 top-4 rounded-full border border-gold/30 bg-black/25 p-2 text-ivory transition hover:bg-black/40"
+            className="absolute right-4 top-4 z-10 rounded-full border border-gold/30 bg-black/25 p-2 text-ivory transition hover:bg-black/40"
             aria-label={t.close}
           >
             <X size={18} />
           </button>
 
-          <div className="relative mx-auto mb-4 h-28 w-28 overflow-hidden rounded-full border-4 border-gold/75 bg-[#fff8ee] shadow-[0_12px_32px_rgba(0,0,0,0.35)] ring-4 ring-gold/20">
+          <div className="relative z-[1] mx-auto mb-4 h-28 w-28 overflow-hidden rounded-full border-4 border-gold/75 bg-[#fff8ee] shadow-[0_12px_32px_rgba(0,0,0,0.35)] ring-4 ring-gold/20">
             <CandidateAvatar candidate={candidate} className="h-full w-full" softBg />
           </div>
-          <h3 id="candidate-name" className="relative font-display text-3xl font-semibold">
+          <h3 id="candidate-name" className="relative z-[1] font-display text-3xl font-semibold">
             {candidate.name[lang]}
           </h3>
-          <p className="relative mt-1 text-sm font-medium tracking-wide text-gold-light">
+          <p className="relative z-[1] mt-1 text-sm font-medium tracking-wide text-gold-light">
             {candidate.post[lang]}
           </p>
           {candidate.phone && (
             <a
               href={`tel:${candidate.phone}`}
-              className="relative mt-4 inline-flex items-center gap-2 rounded-full border border-gold/50 bg-black/15 px-4 py-2 text-sm text-ivory transition hover:bg-black/25"
+              className="relative z-[1] mt-4 inline-flex items-center gap-2 rounded-full border border-gold/50 bg-black/15 px-4 py-2 text-sm text-ivory transition hover:bg-black/25"
             >
               <Phone size={14} className="text-gold" />
               {candidate.phone}
@@ -76,6 +72,23 @@ export default function CandidateModal({ candidate, onClose }) {
         <div className="space-y-6 px-6 py-8">
           {candidate.detail?.[lang] && (
             <p className="text-center text-sm text-ink-muted">{candidate.detail[lang]}</p>
+          )}
+          {candidate.roles?.[lang]?.length > 0 && (
+            <div>
+              <h4 className="font-display text-xl font-semibold text-maroon">{t.rolesTitle}</h4>
+              <div className="gold-line mt-2 w-16" />
+              <ul className="mt-4 space-y-2.5 text-left">
+                {candidate.roles[lang].map((role, i) => (
+                  <li
+                    key={i}
+                    className="flex gap-2.5 text-sm leading-relaxed text-ink-muted sm:text-base"
+                  >
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden />
+                    <span>{role}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
           {candidate.aboutUs?.[lang] && (
             <div>
@@ -95,13 +108,6 @@ export default function CandidateModal({ candidate, onClose }) {
               </p>
             </div>
           )}
-          <button
-            type="button"
-            onClick={onClose}
-            className="w-full rounded-full bg-maroon py-3.5 text-sm font-semibold text-ivory shadow-md transition hover:bg-maroon-soft"
-          >
-            {t.close}
-          </button>
         </div>
       </div>
     </div>
@@ -109,26 +115,33 @@ export default function CandidateModal({ candidate, onClose }) {
 }
 
 export function CandidateAvatar({ candidate, className = '', softBg = false }) {
+  const [failed, setFailed] = useState(false)
+
   return (
     <div className={`relative overflow-hidden ${className}`}>
-      <div
-        className={`flex h-full w-full items-center justify-center font-display text-3xl font-bold ${
-          softBg ? 'bg-[#fff8ee] text-maroon/40' : 'text-ivory'
-        }`}
-        style={softBg ? undefined : { background: candidate.color }}
-      >
-        {candidate.initials}
-      </div>
-      <img
-        src={candidate.photo}
-        alt=""
-        className={`absolute inset-0 h-full w-full ${
-          softBg ? 'object-contain object-center p-1.5' : 'object-cover'
-        }`}
-        onError={(e) => {
-          e.currentTarget.style.display = 'none'
-        }}
-      />
+      {/* Initials only when photo missing/failed — never behind the image */}
+      {(failed || !candidate.photo) && (
+        <div
+          className={`flex h-full w-full items-center justify-center font-display text-3xl font-bold ${
+            softBg ? 'bg-[#fff8ee] text-maroon/40' : 'text-ivory'
+          }`}
+          style={softBg ? undefined : { background: candidate.color }}
+        >
+          {candidate.initials}
+        </div>
+      )}
+      {!failed && candidate.photo && (
+        <img
+          src={candidate.photo}
+          alt=""
+          className={`absolute inset-0 h-full w-full ${
+            softBg
+              ? 'bg-[#fff8ee] object-contain object-center'
+              : 'object-cover'
+          }`}
+          onError={() => setFailed(true)}
+        />
+      )}
     </div>
   )
 }

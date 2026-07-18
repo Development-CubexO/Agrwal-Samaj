@@ -115,7 +115,7 @@ body.lang-hi {
   align-items: center;
   gap: 0.65rem;
   color: var(--color-gold);
-  font-size: 0.7rem;
+  font-size: 1rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   font-weight: 600;
