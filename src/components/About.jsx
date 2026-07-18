@@ -15,13 +15,13 @@ export default function About() {
           <div className="gold-flourish mb-2">
             <span className="text-gold">✦</span>
           </div>
-          <h2 className="font-display text-3xl font-bold text-maroon sm:text-4xl lg:text-[2.85rem]">
+          <h2 className="section-heading">
             {t.aboutTitle}
           </h2>
-          <div className="gold-line-thick mx-auto mt-4 w-36" />
+          <div className="gold-line-thick mx-auto mt-5 w-44" />
         </div>
 
-        <article className="palace-frame glass-panel relative overflow-hidden rounded-3xl px-6 py-8 text-center sm:px-12 sm:py-10">
+        <article className="palace-frame glass-panel relative overflow-hidden rounded-3xl px-6 py-8 text-center sm:px-12 sm:py-12">
           <PalaceCorners size="lg" />
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.07]"
@@ -31,7 +31,7 @@ export default function About() {
               backgroundSize: '120px 120px',
             }}
           />
-          <p className="relative text-base leading-[1.85] text-ink-muted sm:text-lg">
+          <p className="relative text-[1.05rem] leading-[1.9] text-ink-muted sm:text-xl">
             {t.aboutText}
           </p>
         </article>

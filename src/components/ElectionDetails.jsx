@@ -44,7 +44,7 @@ export default function ElectionDetails() {
       <div className="relative mx-auto max-w-[900px]">
         <div className="mb-4 flex items-center justify-center gap-2 text-center">
           <span className="text-gold text-xs">✦</span>
-          <h2 className="font-display text-lg font-bold text-ivory sm:text-xl">
+          <h2 className="font-display text-2xl font-extrabold text-ivory sm:text-3xl">
             {info.election[lang]}
           </h2>
           <span className="text-gold text-xs">✦</span>
@@ -55,7 +55,7 @@ export default function ElectionDetails() {
           <article className="rounded-2xl border border-gold/45 bg-ivory/[0.08] p-4 shadow-lg backdrop-blur-sm">
             <div className="mb-3 flex items-center gap-2 border-b border-gold/25 pb-2.5">
               <Vote size={16} className="text-gold" />
-              <h3 className="font-display text-sm font-bold text-gold-light sm:text-base">
+              <h3 className="font-display text-base font-extrabold text-gold-light sm:text-lg">
                 {t.votingTitle}
               </h3>
             </div>
@@ -63,7 +63,7 @@ export default function ElectionDetails() {
               {votingItems.map((item, i) => (
                 <li
                   key={item}
-                  className="flex gap-2 text-[11px] leading-snug text-ivory/90 sm:text-xs"
+                  className="flex gap-2 text-xs leading-snug text-ivory/90 sm:text-sm"
                 >
                   <span className="shrink-0 font-semibold text-gold">{i + 1}.</span>
                   <span className="font-hindi">{item}</span>
@@ -76,7 +76,7 @@ export default function ElectionDetails() {
           <article className="rounded-2xl border border-gold/45 bg-ivory/[0.08] p-4 shadow-lg backdrop-blur-sm">
             <div className="mb-3 flex items-center gap-2 border-b border-gold/25 pb-2.5">
               <Calendar size={16} className="text-gold" />
-              <h3 className="font-display text-sm font-bold text-gold-light sm:text-base">
+              <h3 className="font-display text-base font-extrabold text-gold-light sm:text-lg">
                 {t.electionInfoTitle}
               </h3>
             </div>
@@ -86,7 +86,7 @@ export default function ElectionDetails() {
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gold/20 text-gold">
                     <Icon size={13} />
                   </span>
-                  <span className="text-[11px] leading-snug text-ivory/92 sm:text-xs">
+                  <span className="text-xs leading-snug text-ivory/92 sm:text-sm">
                     {label}
                   </span>
                 </li>
@@ -95,10 +95,10 @@ export default function ElectionDetails() {
           </article>
         </div>
 
-        <p className="mt-3 text-center font-display text-xs font-semibold tracking-wide text-gold-light/90 sm:text-sm">
+        <p className="mt-3 text-center font-display text-sm font-extrabold tracking-wide text-gold-light sm:text-base">
           {info.slogan[lang]}
           <span className="mx-2 text-gold/50">·</span>
-          <span className="font-body text-[10px] font-normal text-ivory/60 sm:text-xs">
+          <span className="font-body text-xs font-normal text-ivory/60 sm:text-sm">
             {info.footer[lang]}
           </span>
         </p>

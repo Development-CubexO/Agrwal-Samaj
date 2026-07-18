@@ -38,7 +38,7 @@ export default function Navbar() {
             <img src={logo} alt={t.brand} className="h-full w-full object-cover" />
           </div>
           <div className="hidden leading-tight min-[420px]:block">
-            <p className="font-display text-base font-semibold tracking-wide text-ivory sm:text-lg">
+            <p className="font-display text-lg font-extrabold tracking-wide text-ivory sm:text-xl">
               {t.brand}
             </p>
             <p className="mt-0.5 text-[10px] font-medium tracking-[0.08em] text-gold-light uppercase sm:text-[11px]">

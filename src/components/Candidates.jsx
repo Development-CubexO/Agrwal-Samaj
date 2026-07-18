@@ -15,9 +15,9 @@ const PHOTO_BG = 'bg-[#fff8ee]'
 
 function SectionBadge({ children }) {
   return (
-    <div className="mx-auto mb-4 flex w-fit items-center justify-center sm:mb-5">
-      <div className="relative rounded-full bg-linear-to-b from-maroon-soft to-maroon-deep px-10 py-2.5 shadow-[0_6px_20px_rgba(63,15,26,0.35)] ring-1 ring-gold/55 sm:px-14">
-        <span className="font-display text-base font-bold tracking-wide text-ivory sm:text-lg">
+    <div className="mx-auto mb-5 flex w-fit items-center justify-center sm:mb-6">
+      <div className="relative rounded-full bg-linear-to-b from-maroon-soft to-maroon-deep px-12 py-3 shadow-[0_8px_24px_rgba(63,15,26,0.4)] ring-1 ring-gold/60 sm:px-16">
+        <span className="font-display text-lg font-extrabold tracking-wide text-ivory sm:text-xl">
           {children}
         </span>
       </div>
@@ -33,7 +33,7 @@ function CandidateCard({ candidate, size = 'large', onSelect, delay = 0 }) {
     <button
       type="button"
       onClick={() => onSelect(candidate)}
-      className="candidate-card fade-up group flex w-full cursor-pointer flex-col items-center rounded-2xl border border-gold/35 bg-ivory/70 p-3 text-center shadow-[0_8px_28px_rgba(63,15,26,0.06)] backdrop-blur-sm transition hover:border-gold/70 hover:bg-ivory sm:p-4"
+      className="candidate-card fade-up group flex w-full cursor-pointer flex-col items-center rounded-2xl border border-gold/40 bg-ivory/75 p-3 text-center shadow-[0_10px_32px_rgba(63,15,26,0.08)] backdrop-blur-sm transition hover:border-gold/70 hover:bg-ivory sm:p-4"
       style={{ animationDelay: `${delay}ms` }}
     >
       <div
@@ -47,21 +47,21 @@ function CandidateCard({ candidate, size = 'large', onSelect, delay = 0 }) {
       </div>
 
       {isLarge && candidate.post && (
-        <p className="mt-3 font-hindi text-[11px] font-semibold leading-tight text-maroon sm:text-xs">
+        <p className="mt-3 font-hindi text-xs font-bold leading-tight text-maroon sm:text-sm">
           {candidate.post[lang]}
         </p>
       )}
 
       <p
-        className={`mt-1.5 font-display font-bold leading-snug text-maroon-deep ${
-          isLarge ? 'text-sm sm:text-base' : 'text-xs sm:text-sm'
+        className={`mt-1.5 font-display font-extrabold leading-snug text-maroon-deep ${
+          isLarge ? 'text-base sm:text-lg' : 'text-sm sm:text-base'
         }`}
       >
         {candidate.name[lang]}
       </p>
 
       {candidate.detail?.[lang] && (
-        <p className="mt-0.5 text-[10px] leading-tight text-ink-muted sm:text-[11px]">
+        <p className="mt-0.5 text-[11px] leading-tight text-ink-muted sm:text-xs">
           {candidate.detail[lang]}
         </p>
       )}
@@ -82,10 +82,10 @@ export default function Candidates() {
           <div className="gold-flourish mb-2">
             <span className="text-gold">✦</span>
           </div>
-          <h2 className="font-display text-3xl font-bold text-maroon sm:text-4xl lg:text-[2.85rem]">
+          <h2 className="section-heading">
             {t.candidatesTitle}
           </h2>
-          <div className="gold-line-thick mx-auto mt-4 w-36" />
+          <div className="gold-line-thick mx-auto mt-5 w-44" />
           {/* <p className="mt-3 text-sm text-ink-muted sm:text-base">{t.candidatesSubtitle}</p> */}
         </div>
 
@@ -124,17 +124,17 @@ export default function Candidates() {
             </div>
 
             <div className="relative z-0 pb-5 text-center sm:pb-6 lg:pb-7 lg:text-left">
-              <span className="gold-shimmer inline-block rounded-full px-4 py-1 text-[11px] font-bold tracking-[0.12em] text-maroon-deep uppercase shadow-sm">
+              <span className="gold-shimmer inline-block rounded-full px-4 py-1.5 text-xs font-extrabold tracking-[0.12em] text-maroon-deep uppercase shadow-sm">
                 {t.presidentLabel}
               </span>
-              <h3 className="mt-3 font-display text-2xl font-bold text-ivory sm:text-3xl lg:text-4xl">
+              <h3 className="mt-3 font-display text-3xl font-extrabold text-ivory sm:text-4xl lg:text-5xl">
                 {president.name[lang]}
               </h3>
               {president.detail?.[lang] && (
-                <p className="mt-1 text-sm text-gold-light/90">{president.detail[lang]}</p>
+                <p className="mt-1.5 text-base text-gold-light/90">{president.detail[lang]}</p>
               )}
 
-              <div className="mt-3 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
                 <div className="flex items-center gap-2 rounded-full border border-gold/35 bg-maroon-deep/45 px-3 py-1.5 text-xs text-gold-light backdrop-blur-sm sm:text-sm">
                   <Award size={14} className="text-gold" />
                   <span>{president.experience[lang]}</span>
@@ -145,15 +145,15 @@ export default function Candidates() {
                 </div>
               </div>
 
-              <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-ivory/88">
+              <p className="mt-4 line-clamp-3 text-base leading-relaxed text-ivory/90">
                 {president.aboutUs[lang]}
               </p>
 
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
                 <button
                   type="button"
                   onClick={() => setSelected(president)}
-                  className="inline-flex items-center justify-center rounded-full bg-gold px-6 py-2.5 text-sm font-bold text-maroon-deep shadow-[0_12px_32px_rgba(201,162,39,0.4)] transition hover:scale-[1.03] hover:bg-gold-light"
+                  className="inline-flex items-center justify-center rounded-full bg-gold px-7 py-3 text-base font-extrabold text-maroon-deep shadow-[0_12px_32px_rgba(201,162,39,0.4)] transition hover:scale-[1.03] hover:bg-gold-light"
                 >
                   {t.moreDetails}
                 </button>

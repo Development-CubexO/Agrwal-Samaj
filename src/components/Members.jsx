@@ -95,10 +95,10 @@ export default function Members() {
           <div className="gold-flourish mb-2">
             <span className="text-gold">✦</span>
           </div>
-          <h2 className="font-display text-3xl font-bold text-maroon sm:text-4xl">
+          <h2 className="section-heading">
             {t.membersTitle}
           </h2>
-          <div className="gold-line-thick mx-auto mt-4 w-28" />
+          <div className="gold-line-thick mx-auto mt-5 w-44" />
           <p className="mt-3 text-sm text-ink-muted sm:text-base">{t.membersSubtitle}</p>
         </div>
 

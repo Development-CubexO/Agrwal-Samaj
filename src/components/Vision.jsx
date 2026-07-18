@@ -25,11 +25,11 @@ export default function Vision() {
           <div className="gold-flourish mb-2">
             <span className="text-gold">✦</span>
           </div>
-          <h2 className="font-display text-3xl font-bold text-maroon sm:text-4xl lg:text-[2.85rem]">
+          <h2 className="section-heading">
             {t.visionTitle}
           </h2>
-          <div className="gold-line-thick mx-auto mt-4 w-36" />
-          <p className="mt-3 text-sm text-ink-muted sm:text-base">{t.visionSubtitle}</p>
+          <div className="gold-line-thick mx-auto mt-5 w-44" />
+          <p className="mt-4 text-base text-ink-muted sm:text-lg">{t.visionSubtitle}</p>
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -45,11 +45,11 @@ export default function Vision() {
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-gold/50 bg-linear-to-br from-gold/20 to-gold/5 text-gold-deep shadow-[0_8px_24px_rgba(201,162,39,0.2)] transition duration-300 group-hover:scale-110 group-hover:border-gold group-hover:from-gold/30">
                   <Icon size={28} strokeWidth={1.5} />
                 </div>
-                <h3 className="font-display text-xl font-bold text-maroon sm:text-2xl">
+                <h3 className="section-subheading">
                   {item.title}
                 </h3>
                 <div className="gold-line mx-auto mt-3 w-14" />
-                <p className="mt-4 text-sm leading-relaxed text-ink-muted">{item.desc}</p>
+                <p className="mt-4 text-[0.95rem] leading-relaxed text-ink-muted sm:text-base">{item.desc}</p>
               </article>
             )
           })}
