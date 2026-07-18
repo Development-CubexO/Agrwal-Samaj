@@ -55,35 +55,19 @@ export default function Banner() {
       <button
         type="button"
         onClick={prev}
-        className="absolute left-3 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-gold/50 bg-maroon-deep/55 text-gold-light shadow-lg backdrop-blur-md transition hover:scale-105 hover:border-gold hover:bg-maroon hover:text-gold sm:left-6"
+        className="absolute left-2 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-gold/50 bg-maroon-deep/55 text-gold-light shadow-lg backdrop-blur-md transition hover:scale-105 hover:border-gold hover:bg-maroon hover:text-gold sm:left-6 sm:h-12 sm:w-12"
         aria-label="Previous slide"
       >
-        <ChevronLeft size={22} />
+        <ChevronLeft className="h-4 w-4 sm:h-[22px] sm:w-[22px]" />
       </button>
       <button
         type="button"
         onClick={next}
-        className="absolute right-3 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-gold/50 bg-maroon-deep/55 text-gold-light shadow-lg backdrop-blur-md transition hover:scale-105 hover:border-gold hover:bg-maroon hover:text-gold sm:right-6"
+        className="absolute right-2 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-gold/50 bg-maroon-deep/55 text-gold-light shadow-lg backdrop-blur-md transition hover:scale-105 hover:border-gold hover:bg-maroon hover:text-gold sm:right-6 sm:h-12 sm:w-12"
         aria-label="Next slide"
       >
-        <ChevronRight size={22} />
+        <ChevronRight className="h-4 w-4 sm:h-[22px] sm:w-[22px]" />
       </button>
-
-      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-2.5">
-        {SLIDE_IMAGES.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={() => setIndex(i)}
-            className={`h-2.5 rounded-full transition-all duration-300 ${
-              i === index
-                ? 'w-9 bg-gold shadow-[0_0_12px_rgba(201,162,39,0.7)]'
-                : 'w-2.5 bg-ivory/50 hover:bg-ivory/80'
-            }`}
-            aria-label={`Go to slide ${i + 1}`}
-          />
-        ))}
-      </div>
     </section>
   )
 }

@@ -77,7 +77,7 @@ export default function Footer() {
               </div>
               <div>
                 <p className="font-display text-lg font-semibold leading-tight">{t.brand}</p>
-                <p className="mt-0.5 text-[11px] tracking-[0.14em] text-gold-light uppercase">
+                <p className="mt-0.5 text-[11px] tracking-[0.06em] text-gold-light uppercase">
                   {t.brandSub}
                 </p>
               </div>

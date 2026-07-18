@@ -41,7 +41,7 @@ export default function Navbar() {
             <p className="font-display text-base font-semibold tracking-wide text-ivory sm:text-lg">
               {t.brand}
             </p>
-            <p className="mt-0.5 text-[10px] font-medium tracking-[0.2em] text-gold-light uppercase sm:text-[11px]">
+            <p className="mt-0.5 text-[10px] font-medium tracking-[0.08em] text-gold-light uppercase sm:text-[11px]">
               {t.brandSub}
             </p>
           </div>
