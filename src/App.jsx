@@ -14,16 +14,23 @@ export default function App() {
     <LanguageProvider>
       <div className="royal-pattern relative min-h-screen overflow-x-hidden">
         <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden>
+          {/* Full-page royal mandala backdrop */}
           <img
             src={mandala}
             alt=""
-            className="mandala-spin absolute left-[-12%] top-[18%] h-[min(70vw,560px)] w-[min(70vw,560px)] max-w-none opacity-[0.2] sm:left-[-8%] sm:opacity-[0.24] lg:left-[-4%]"
+            className="absolute left-1/2 top-1/2 h-[min(140vw,900px)] w-[min(140vw,900px)] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.12]"
           />
           <img
             src={mandala}
             alt=""
-            className="mandala-spin-reverse absolute right-[-12%] top-[52%] h-[min(70vw,560px)] w-[min(70vw,560px)] max-w-none opacity-[0.2] sm:right-[-8%] sm:opacity-[0.24] lg:right-[-4%]"
+            className="mandala-spin absolute left-[-18%] top-[-5%] h-[min(85vw,620px)] w-[min(85vw,620px)] max-w-none opacity-[0.18] sm:left-[-10%] sm:opacity-[0.22]"
           />
+          <img
+            src={mandala}
+            alt=""
+            className="mandala-spin-reverse absolute right-[-18%] bottom-[-8%] h-[min(85vw,620px)] w-[min(85vw,620px)] max-w-none opacity-[0.18] sm:right-[-10%] sm:opacity-[0.22]"
+          />
+          <div className="absolute inset-0 bg-ivory/55" />
         </div>
 
         <div className="relative z-10">
