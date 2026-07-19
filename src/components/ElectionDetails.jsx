@@ -63,9 +63,9 @@ export default function ElectionDetails() {
               {votingItems.map((item, i) => (
                 <li
                   key={item}
-                  className="flex gap-2 text-xs leading-snug text-ivory/90 sm:text-sm"
+                  className="flex gap-2 text-xs font-bold leading-snug text-gold-light sm:text-sm"
                 >
-                  <span className="shrink-0 font-semibold text-gold">{i + 1}.</span>
+                  <span className="shrink-0 text-gold">{i + 1}.</span>
                   <span className="font-hindi">{item}</span>
                 </li>
               ))}
@@ -80,15 +80,16 @@ export default function ElectionDetails() {
                 {t.electionInfoTitle}
               </h3>
             </div>
-            <ul className="space-y-2.5">
+            <ul className="space-y-1.5">
               {electionItems.map(({ icon: Icon, label }) => (
-                <li key={label} className="flex items-center gap-2.5">
+                <li
+                  key={label}
+                  className="flex items-center gap-2.5 text-xs font-bold leading-snug text-gold-light sm:text-sm"
+                >
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gold/20 text-gold">
                     <Icon size={13} />
                   </span>
-                  <span className="text-xs leading-snug text-ivory/92 sm:text-sm">
-                    {label}
-                  </span>
+                  <span className="font-hindi">{label}</span>
                 </li>
               ))}
             </ul>
@@ -96,11 +97,7 @@ export default function ElectionDetails() {
         </div>
 
         <p className="mt-3 text-center font-display text-sm font-extrabold tracking-wide text-gold-light sm:text-base">
-          {info.slogan[lang]}
-          <span className="mx-2 text-gold/50">·</span>
-          <span className="font-body text-xs font-normal text-ivory/60 sm:text-sm">
-            {info.footer[lang]}
-          </span>
+          {info.footer[lang]}
         </p>
       </div>
     </section>

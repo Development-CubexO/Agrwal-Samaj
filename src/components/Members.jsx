@@ -150,12 +150,6 @@ export default function Members() {
           </div>
         </div>
 
-        <p className="mb-4 text-center text-xs text-ink-muted">
-          {loading
-            ? t.loadingMembers
-            : `${t.showing} ${filtered.length} ${t.of} ${members.length} ${t.members}`}
-        </p>
-
         {error && (
           <p className="mb-4 rounded-2xl border border-maroon/20 bg-ivory py-4 text-center text-sm text-maroon">
             {error}

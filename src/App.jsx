@@ -21,12 +21,7 @@ export default function App() {
 
       <div className="royal-pattern relative min-h-screen overflow-x-hidden">
         <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden>
-          {/* Full-page royal mandala backdrop */}
-          <img
-            src={mandala}
-            alt=""
-            className="absolute left-1/2 top-1/2 h-[min(140vw,900px)] w-[min(140vw,900px)] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.12]"
-          />
+          {/* Full-page royal mandala backdrop — left & right only */}
           <img
             src={mandala}
             alt=""

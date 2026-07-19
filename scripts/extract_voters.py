@@ -178,70 +178,146 @@ def parse_individual_pages(doc, page_indices: list[int], member_type: str) -> li
     return records
 
 
+def _iter_word_rows(page, y_tol: float = 2.0):
+    """Cluster PDF words into visual rows by Y position."""
+    words = page.get_text("words") or []
+    words = sorted(words, key=lambda w: (w[1], w[0]))
+    if not words:
+        return
+    cluster = [words[0]]
+    cy = words[0][1]
+    for w in words[1:]:
+        if abs(w[1] - cy) <= y_tol:
+            cluster.append(w)
+        else:
+            yield sorted(cluster, key=lambda t: t[0])
+            cluster = [w]
+            cy = w[1]
+    if cluster:
+        yield sorted(cluster, key=lambda t: t[0])
+
+
+def _is_sanstha_header_footer(ws: list) -> bool:
+    line = " ".join(w[4] for w in ws).upper()
+    return (
+        "SANSTHA MEMBER" in line
+        or "VOTER LIST" in line
+        or line.startswith("SHRI AGRAWAL SAMAJ")
+        or "SANSTHAGAT PAGE" in line
+        or line.startswith("S.NO.")
+        or line.startswith("M.NO.")
+    )
+
+
+def _left_digits(ws: list) -> list[tuple[float, str]]:
+    return [(w[0], w[4]) for w in ws if w[0] < 145 and w[4].isdigit()]
+
+
+def _parse_member_fields(ws: list, sno_x: float) -> tuple[str, str, str]:
+    after = [w for w in ws if w[0] > sno_x + 5]
+    name_ws: list[str] = []
+    addr_ws: list[str] = []
+    phone = ""
+    for w in after:
+        tok = w[4]
+        if w[0] >= 650 or (PHONE_RE.match(tok) and w[0] >= 600):
+            phone = re.sub(r"\s+", "", tok)
+            continue
+        if w[0] < 310:
+            name_ws.append(tok)
+        else:
+            addr_ws.append(tok)
+    return " ".join(name_ws).strip(), " ".join(addr_ws).strip(), phone
+
+
 def parse_sansthagat(doc, page_indices: list[int]) -> list[dict]:
-    """Best-effort parse of SANSTHAGAT pages into person rows."""
+    """Parse SANSTHAGAT pages using column X positions.
+
+    PDF layout interleaves:
+      - org rows (S.No ~x60, M.No ~x87, sanstha name) — skipped as voters
+      - member rows (S.No ~x123, name, address, mobile)
+    Members inherit the current organisation M.No.
+    """
     records: list[dict] = []
-    lines: list[str] = []
-    for i in page_indices:
-        lines.extend(clean_lines(doc[i].get_text() or ""))
+    current_mno = ""
+    pending: list[str] = []
 
-    # Heuristic: when we see NAME then ADDRESS then optional MOBILE,
-    # and name looks like a person (not org ending in SAMITI/MANDAL etc.)
-    org_hint = re.compile(r"(SAMITI|MANDAL|TRUST|SOCIETY|SANGH|SANSTHA)", re.I)
-    i = 0
-    seq = 0
-    current_org_mno = ""
-    while i < len(lines):
-        line = lines[i]
-
-        # org block often: org_sno, org_mno, optional phone, then members
-        if SNO_RE.match(line) and i + 1 < len(lines) and re.match(r"^\d{1,6}$", lines[i + 1]):
-            # could be org header or member sno+mno — ambiguous
-            # if next next is phone-only or name
-            current_org_mno = lines[i + 1]
-            i += 2
-            if i < len(lines) and is_phone(lines[i]):
+    for pi in page_indices:
+        rows = list(_iter_word_rows(doc[pi]))
+        i = 0
+        while i < len(rows):
+            ws = rows[i]
+            if _is_sanstha_header_footer(ws):
                 i += 1
-            continue
+                continue
 
-        if is_name(line) and not org_hint.search(line):
-            name = line
-            i += 1
-            addr_parts: list[str] = []
-            phone = ""
-            while i < len(lines):
-                cur = lines[i]
-                if is_phone(cur):
-                    phone = re.sub(r"\s+", "", cur)
-                    i += 1
-                    break
-                if SNO_RE.match(cur):
-                    break
-                if is_name(cur) and addr_parts:
-                    break
-                if org_hint.search(cur):
-                    break
-                addr_parts.append(cur)
+            ld = _left_digits(ws)
+            org_nums = [(x, n) for x, n in ld if x < 110]
+            mem_nums = [(x, n) for x, n in ld if 110 <= x <= 140]
+
+            # Organisation header — update M.No., never emit as a member
+            if org_nums and not mem_nums:
+                if len(org_nums) >= 2:
+                    current_mno = org_nums[1][1]
+                else:
+                    x, n = org_nums[0]
+                    if x >= 70:
+                        current_mno = n
                 i += 1
-            seq += 1
-            records.append(
-                {
-                    "S.No.": seq,
-                    "M.No.": str(current_org_mno),
-                    "VARSHIK MEMBER NAME": name.upper(),
-                    "ADDRESS": ", ".join(addr_parts).upper(),
-                    "MOBILE": phone,
-                    "TYPE": "SANSTHAGAT",
-                }
-            )
-            continue
+                continue
 
-        if org_hint.search(line):
-            # organization name line — skip as person
+            if mem_nums:
+                sno = int(mem_nums[0][1])
+                name_row, addr, phone = _parse_member_fields(ws, mem_nums[0][0])
+                had_name_on_row = bool(name_row)
+                name_parts = pending + ([name_row] if name_row else [])
+                name = " ".join(name_parts).strip()
+                pending = []
+
+                j = i + 1
+                while j < len(rows):
+                    nws = rows[j]
+                    if _is_sanstha_header_footer(nws) or _left_digits(nws):
+                        break
+                    n_name = [w[4] for w in nws if 145 <= w[0] < 310]
+                    n_addr = [w[4] for w in nws if 310 <= w[0] < 650]
+                    n_phone = [w[4] for w in nws if w[0] >= 650]
+                    if not n_name and not n_addr and not n_phone:
+                        break
+                    # Name wrap only when the sno row itself had no name
+                    if n_name and not had_name_on_row:
+                        name = f"{name} {' '.join(n_name)}".strip()
+                        j += 1
+                        continue
+                    if n_addr and not addr:
+                        addr = f"{addr} {' '.join(n_addr)}".strip()
+                        j += 1
+                        continue
+                    if n_phone and not phone:
+                        phone = re.sub(r"\s+", "", n_phone[0])
+                        j += 1
+                        continue
+                    break
+
+                i = j
+                records.append(
+                    {
+                        "S.No.": sno,
+                        "M.No.": str(current_mno),
+                        "VARSHIK MEMBER NAME": re.sub(r"\s{2,}", " ", name).upper(),
+                        "ADDRESS": re.sub(r"\s{2,}", " ", addr).upper(),
+                        "MOBILE": phone,
+                        "TYPE": "SANSTHAGAT",
+                    }
+                )
+                continue
+
+            # Floating name fragment above the next member sno row
+            frag = " ".join(w[4] for w in ws if 145 <= w[0] < 310).strip()
+            addr_frag = " ".join(w[4] for w in ws if 310 <= w[0] < 650).strip()
+            if frag and not addr_frag:
+                pending.append(frag)
             i += 1
-            continue
-
-        i += 1
 
     return records
 

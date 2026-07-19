@@ -28,16 +28,18 @@ function SectionBadge({ children }) {
 function CandidateCard({ candidate, size = 'large', onSelect, delay = 0 }) {
   const { lang } = useLanguage()
   const isLarge = size === 'large'
+  const detail = candidate.detail?.[lang]
+  const post = candidate.post?.[lang]
 
   return (
     <button
       type="button"
       onClick={() => onSelect(candidate)}
-      className="candidate-card fade-up group flex w-full cursor-pointer flex-col items-center rounded-2xl border border-gold/40 bg-ivory/75 p-3 text-center shadow-[0_10px_32px_rgba(63,15,26,0.08)] backdrop-blur-sm transition hover:border-gold/70 hover:bg-ivory sm:p-4"
+      className="candidate-card fade-up group flex h-full w-full cursor-pointer flex-col items-center rounded-2xl border border-gold/40 bg-ivory/75 p-3 text-center shadow-[0_10px_32px_rgba(63,15,26,0.08)] backdrop-blur-sm transition hover:border-gold/70 hover:bg-ivory sm:p-4"
       style={{ animationDelay: `${delay}ms` }}
     >
       <div
-        className={`candidate-photo overflow-hidden rounded-xl border-[1.5px] border-gold/60 shadow-[0_8px_20px_rgba(63,15,26,0.1)] transition duration-300 ${PHOTO_BG} ${
+        className={`candidate-photo shrink-0 overflow-hidden rounded-xl border-[1.5px] border-gold/60 shadow-[0_8px_20px_rgba(63,15,26,0.1)] transition duration-300 ${PHOTO_BG} ${
           isLarge
             ? 'aspect-4/5 w-full max-w-[200px]'
             : 'aspect-4/5 w-full max-w-[130px]'
@@ -46,25 +48,27 @@ function CandidateCard({ candidate, size = 'large', onSelect, delay = 0 }) {
         <CandidateAvatar candidate={candidate} className="h-full w-full" softBg />
       </div>
 
-      {isLarge && candidate.post && (
-        <p className="mt-3 font-hindi text-xs font-bold leading-tight text-maroon sm:text-sm">
-          {candidate.post[lang]}
-        </p>
-      )}
+      <div className="mt-3 flex w-full flex-1 flex-col items-center justify-start">
+        {isLarge && post && (
+          <p className="font-hindi text-xs font-bold leading-tight text-maroon sm:text-sm">
+            {post}
+          </p>
+        )}
 
-      <p
-        className={`mt-1.5 font-display font-extrabold leading-snug text-maroon-deep ${
-          isLarge ? 'text-base sm:text-lg' : 'text-sm sm:text-base'
-        }`}
-      >
-        {candidate.name[lang]}
-      </p>
-
-      {candidate.detail?.[lang] && (
-        <p className="mt-0.5 text-[11px] leading-tight text-ink-muted sm:text-xs">
-          {candidate.detail[lang]}
+        <p
+          className={`font-display font-extrabold leading-snug text-maroon-deep ${
+            isLarge ? 'mt-1.5 text-base sm:text-lg' : 'text-sm sm:text-base'
+          }`}
+        >
+          {candidate.name[lang]}
         </p>
-      )}
+
+        {detail && (
+          <p className="mt-0.5 text-[11px] leading-tight text-ink-muted sm:text-xs">
+            {detail}
+          </p>
+        )}
+      </div>
     </button>
   )
 }
@@ -124,7 +128,7 @@ export default function Candidates() {
             </div>
 
             <div className="relative z-0 pb-5 text-center sm:pb-6 lg:pb-7 lg:text-left">
-              <span className="gold-shimmer inline-block rounded-full px-4 py-1.5 text-xs font-extrabold tracking-[0.12em] text-maroon-deep uppercase shadow-sm">
+              <span className="gold-shimmer inline-block rounded-full px-5 py-2 text-base font-black tracking-[0.1em] text-maroon-deep uppercase shadow-sm sm:text-lg">
                 {t.presidentLabel}
               </span>
               <h3 className="mt-3 font-display text-3xl font-extrabold text-ivory sm:text-4xl lg:text-5xl">
@@ -167,45 +171,37 @@ export default function Candidates() {
           <PalaceCorners />
           <div className="mb-8">
             <SectionBadge>{t.padadhikariTitle}</SectionBadge>
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-5">
+            <div className="grid grid-cols-2 items-stretch gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
               {otherPadadhikari.map((c, i) => (
-                <div
+                <CandidateCard
                   key={c.id}
-                  className="w-[calc((100%-0.75rem)/2)] sm:w-[calc((100%-2.5rem)/3)] lg:w-[calc((100%-3.75rem)/4)]"
-                >
-                  <CandidateCard
-                    candidate={c}
-                    size="large"
-                    onSelect={setSelected}
-                    delay={i * 40}
-                  />
-                </div>
+                  candidate={c}
+                  size="large"
+                  onSelect={setSelected}
+                  delay={i * 40}
+                />
               ))}
             </div>
           </div>
 
           <div className="mb-8">
             <SectionBadge>{t.purushTitle}</SectionBadge>
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+            <div className="grid grid-cols-3 items-stretch gap-2 sm:grid-cols-5 sm:gap-4">
               {purushKaryakarini.map((c, i) => (
-                <div
+                <CandidateCard
                   key={c.id}
-                  className="w-[calc((100%-1rem)/3)] sm:w-[calc((100%-4rem)/5)]"
-                >
-                  <CandidateCard
-                    candidate={c}
-                    size="small"
-                    onSelect={setSelected}
-                    delay={i * 30}
-                  />
-                </div>
+                  candidate={c}
+                  size="small"
+                  onSelect={setSelected}
+                  delay={i * 30}
+                />
               ))}
             </div>
           </div>
 
           <div className="mb-7">
             <SectionBadge>{t.mahilaTitle}</SectionBadge>
-            <div className="mx-auto grid max-w-md grid-cols-3 gap-3 sm:max-w-lg sm:gap-5">
+            <div className="mx-auto grid max-w-md grid-cols-3 items-stretch gap-3 sm:max-w-lg sm:gap-5">
               {mahilaKaryakarini.map((c, i) => (
                 <CandidateCard
                   key={c.id}
