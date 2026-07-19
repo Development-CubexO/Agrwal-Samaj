@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import banner1 from '../assets/banner/Banner.png'
 import banner2 from '../assets/banner/Banner2.png'
+import banner3 from '../assets/banner/Banner3.png'
 import PalaceCorners from './PalaceCorners'
 
-const SLIDE_IMAGES = [banner1, banner2]
+const SLIDE_IMAGES = [banner1, banner2, banner3]
 
 export default function Banner() {
   const [index, setIndex] = useState(0)

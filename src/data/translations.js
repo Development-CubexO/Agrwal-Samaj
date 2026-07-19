@@ -1,6 +1,6 @@
 export const translations = {
   hi: {
-    brand: 'भारतीय अग्रवाल समाज',
+    brand: 'श्री अग्रवाल समाज केन्द्रीय समिति',
     brandSub: 'एकता • सेवा • विकास',
     brandShort: 'अ',
     navHome: 'होम',
@@ -10,14 +10,14 @@ export const translations = {
     navContact: 'संपर्क करें',
     langHi: 'हिंदी',
     langEn: 'English',
-    bannerTitle: 'भारतीय अग्रवाल समाज चुनाव 2026',
+    bannerTitle: 'श्री अग्रवाल समाज केन्द्रीय समिति चुनाव 2026',
     bannerSubtitle: 'एकता • सेवा • विकास',
     bannerDesc: 'आइए, मिलकर बनाएं अपने समाज का उज्ज्वल भविष्य',
     bannerCta: 'हमारी टीम से मिलें',
     electionBadge: 'चुनाव 2026',
     aboutTitle: 'हमारा संदेश',
     aboutText:
-      'भारतीय अग्रवाल समाज की समृद्ध संस्कृति, एकता और सेवा भावना को आगे बढ़ाते हुए, हम सभी सदस्यों से आग्रह करते हैं कि समाज के उज्ज्वल भविष्य के लिए सक्रिय रूप से जुड़ें। यह चुनाव पारदर्शिता, विकास और सामाजिक समरसता को मजबूत करने का अवसर है। आइए मिलकर सेवा और सद्भाव का मार्ग प्रशस्त करें।',
+      'श्री अग्रवाल समाज केन्द्रीय समिति की समृद्ध संस्कृति, एकता और सेवा भावना को आगे बढ़ाते हुए, हम सभी सदस्यों से आग्रह करते हैं कि समाज के उज्ज्वल भविष्य के लिए सक्रिय रूप से जुड़ें। यह चुनाव पारदर्शिता, विकास और सामाजिक समरसता को मजबूत करने का अवसर है। आइए मिलकर सेवा और सद्भाव का मार्ग प्रशस्त करें।',
     candidatesTitle: 'उम्मीदवार',
     candidatesSubtitle: 'जय अग्रसेन खाटू श्यामजी पैनल — द्विवार्षिक चुनाव 2026',
     presidentLabel: 'अध्यक्ष पद प्रत्याशी',
@@ -81,7 +81,7 @@ export const translations = {
     footerPhone: '+91 98765 43210',
     footerEmail: 'info@agrawalsamaj.org',
     footerWeb: 'www.agrawalsamaj.org',
-    footerNote: 'भारतीय अग्रवाल समाज चुनाव समिति',
+    footerNote: 'श्री अग्रवाल समाज केन्द्रीय समिति चुनाव समिति',
     rights: 'सर्वाधिकार सुरक्षित',
     backToTop: 'ऊपर जाएँ',
     visionItems: [
@@ -112,7 +112,7 @@ export const translations = {
     ],
   },
   en: {
-    brand: 'Bhartiya Agrawal Samaj',
+    brand: 'Shree Agrawal Samaj Kendriya Samiti',
     brandSub: 'Unity • Service • Development',
     brandShort: 'A',
     navHome: 'Home',
@@ -122,14 +122,14 @@ export const translations = {
     navContact: 'Contact',
     langHi: 'हिंदी',
     langEn: 'English',
-    bannerTitle: 'Bhartiya Agrawal Samaj Election 2026',
+    bannerTitle: 'Shree Agrawal Samaj Kendriya Samiti Election 2026',
     bannerSubtitle: 'Unity • Service • Development',
     bannerDesc: 'Let us come together to build a bright future for our community',
     bannerCta: 'Meet Our Team',
     electionBadge: 'Election 2026',
     aboutTitle: 'Our Message',
     aboutText:
-      'Carrying forward the rich culture, unity and spirit of service of Bhartiya Agrawal Samaj, we urge every member to actively participate for a brighter future. This election is an opportunity to strengthen transparency, development and social harmony. Together, let us pave the path of service and goodwill.',
+      'Carrying forward the rich culture, unity and spirit of service of Shree Agrawal Samaj Kendriya Samiti, we urge every member to actively participate for a brighter future. This election is an opportunity to strengthen transparency, development and social harmony. Together, let us pave the path of service and goodwill.',
     candidatesTitle: 'Candidates',
     candidatesSubtitle: 'Jai Agrasen Khatu Shyamji Panel — Biennial Election 2026',
     presidentLabel: 'Presidential Candidate',
@@ -193,7 +193,7 @@ export const translations = {
     footerPhone: '+91 98765 43210',
     footerEmail: 'info@agrawalsamaj.org',
     footerWeb: 'www.agrawalsamaj.org',
-    footerNote: 'Bhartiya Agrawal Samaj Election Committee',
+    footerNote: 'Shree Agrawal Samaj Kendriya Samiti Election Committee',
     rights: 'All rights reserved',
     backToTop: 'Back to top',
     visionItems: [
