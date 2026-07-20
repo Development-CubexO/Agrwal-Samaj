@@ -15,7 +15,7 @@ const PAGE_SIZE = 50
 const TYPES = ['ALL', 'SANRAKSHAK', 'AAJIVAN', 'VARSHIK', 'SANSTHAGAT']
 
 export default function Members() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const [members, setMembers] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -298,8 +298,66 @@ export default function Members() {
                       )}
                     </div>
 
+                    {(filtered.length > 0 || query.trim()) && !loading && !error && (
+                      <p className="mt-4 text-center text-sm italic text-maroon-deep/80">
+                        {query.trim()
+                          ? lang === 'hi'
+                            ? (
+                              <>
+                                {t.found}{' '}
+                                <span className="font-semibold not-italic text-maroon">
+                                  {members.length}
+                                </span>{' '}
+                                {t.from}{' '}
+                                <span className="font-semibold not-italic text-maroon">
+                                  {filtered.length}
+                                </span>
+                              </>
+                            )
+                            : (
+                              <>
+                                {t.found}{' '}
+                                <span className="font-semibold not-italic text-maroon">
+                                  {filtered.length}
+                                </span>{' '}
+                                {t.from}{' '}
+                                <span className="font-semibold not-italic text-maroon">
+                                  {members.length}
+                                </span>
+                              </>
+                            )
+                          : lang === 'hi'
+                            ? (
+                              <>
+                                {t.showing}{' '}
+                                <span className="font-semibold not-italic text-maroon">
+                                  {filtered.length}
+                                </span>{' '}
+                                {t.of}{' '}
+                                <span className="font-semibold not-italic text-maroon">
+                                  {pageRows.length}
+                                </span>{' '}
+                                {t.members}
+                              </>
+                            )
+                            : (
+                              <>
+                                {t.showing}{' '}
+                                <span className="font-semibold not-italic text-maroon">
+                                  {pageRows.length}
+                                </span>{' '}
+                                {t.of}{' '}
+                                <span className="font-semibold not-italic text-maroon">
+                                  {filtered.length}
+                                </span>{' '}
+                                {t.members}
+                              </>
+                            )}
+                      </p>
+                    )}
+
                     {filtered.length > PAGE_SIZE && (
-                      <div className="mt-5 flex items-center justify-center gap-3">
+                      <div className="mt-4 flex items-center justify-center gap-3">
                         <button
                           type="button"
                           disabled={currentPage <= 1}
