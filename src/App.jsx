@@ -42,8 +42,9 @@ export default function App() {
             <About />
             <Candidates />
             <ElectionDetails />
-            <Vision />
             <Members />
+            <Vision />
+            
           </main>
           <Footer />
         </div>

@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import {
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   Loader2,
   Search,
 } from 'lucide-react'
@@ -21,6 +23,7 @@ export default function Members() {
   const [typeFilter, setTypeFilter] = useState('ALL')
   const [page, setPage] = useState(1)
   const [selected, setSelected] = useState(null)
+  const [listOpen, setListOpen] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -50,6 +53,10 @@ export default function Members() {
   useEffect(() => {
     setPage(1)
   }, [query, typeFilter])
+
+  useEffect(() => {
+    setListOpen(Boolean(query.trim()))
+  }, [query])
 
   const typeCounts = useMemo(() => {
     const counts = { SANRAKSHAK: 0, AAJIVAN: 0, VARSHIK: 0, SANSTHAGAT: 0 }
@@ -95,15 +102,12 @@ export default function Members() {
           <div className="gold-flourish mb-2">
             <span className="text-gold">✦</span>
           </div>
-          <h2 className="section-heading">
-            {t.membersTitle}
-          </h2>
+          <h2 className="section-heading">{t.membersTitle}</h2>
           <div className="gold-line-thick mx-auto mt-5 w-44" />
           <p className="mt-3 text-sm text-ink-muted sm:text-base">{t.membersSubtitle}</p>
         </div>
 
-        {/* Search + filters */}
-        <div className="palace-frame relative mb-6 overflow-hidden rounded-3xl border border-gold/45 bg-linear-to-br from-maroon via-maroon to-maroon-deep p-5 shadow-[0_16px_40px_rgba(63,15,26,0.2)] sm:p-6">
+        <div className="palace-frame relative overflow-hidden rounded-3xl border border-gold/45 bg-linear-to-br from-maroon via-maroon to-maroon-deep shadow-[0_16px_40px_rgba(63,15,26,0.2)]">
           <PalaceCorners />
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.15]"
@@ -114,180 +118,217 @@ export default function Members() {
             }}
           />
 
-          <div className="relative mx-auto max-w-2xl">
-            <div className="relative">
-              <input
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder={t.searchPlaceholder}
-                className="w-full rounded-full border-2 border-gold/55 bg-ivory py-3 pl-5 pr-14 text-sm text-ink outline-none shadow-md transition placeholder:text-ink-muted/55 focus:border-gold focus:ring-4 focus:ring-gold/20 sm:py-3.5 sm:text-base"
-              />
-              <span className="pointer-events-none absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-gold text-maroon-deep">
-                <Search size={16} />
-              </span>
+          <div className="relative p-5 sm:p-6">
+            <div className="mx-auto max-w-2xl">
+              <div className="relative">
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder={t.searchPlaceholder}
+                  className="w-full rounded-full border-2 border-gold/55 bg-ivory py-3 pl-5 pr-14 text-sm text-ink outline-none shadow-md transition placeholder:text-ink-muted/55 focus:border-gold focus:ring-4 focus:ring-gold/20 sm:py-3.5 sm:text-base"
+                />
+                <span className="pointer-events-none absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-gold text-maroon-deep">
+                  <Search size={16} />
+                </span>
+              </div>
+
+              <div className="mt-4 flex flex-wrap justify-center gap-2">
+                {TYPES.map((key) => (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setTypeFilter(key)}
+                    className={`rounded-full px-3.5 py-1.5 text-xs font-semibold tracking-wide transition sm:text-sm ${
+                      typeFilter === key
+                        ? 'bg-gold text-maroon-deep shadow-sm'
+                        : 'border border-gold/40 bg-maroon-deep/40 text-ivory/85 hover:border-gold hover:text-gold-light'
+                    }`}
+                  >
+                    {typeLabel(key)}
+                    {key !== 'ALL' && typeCounts[key] > 0 && (
+                      <span className="ml-1 opacity-70">({typeCounts[key]})</span>
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="mt-4 flex flex-wrap justify-center gap-2">
-              {TYPES.map((key) => (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => setTypeFilter(key)}
-                  className={`rounded-full px-3.5 py-1.5 text-xs font-semibold tracking-wide transition sm:text-sm ${
-                    typeFilter === key
-                      ? 'bg-gold text-maroon-deep shadow-sm'
-                      : 'border border-gold/40 bg-maroon-deep/40 text-ivory/85 hover:border-gold hover:text-gold-light'
-                  }`}
-                >
-                  {typeLabel(key)}
-                  {key !== 'ALL' && typeCounts[key] > 0 && (
-                    <span className="ml-1 opacity-70">({typeCounts[key]})</span>
-                  )}
-                </button>
-              ))}
+            <div className="mt-5 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setListOpen((open) => !open)}
+                className="inline-flex items-center gap-2 rounded-full border border-gold/50 bg-gold px-6 py-2.5 text-sm font-extrabold text-maroon-deep shadow-[0_8px_20px_rgba(201,162,39,0.35)] transition hover:scale-[1.02] hover:bg-gold-light"
+                aria-expanded={listOpen}
+              >
+                {listOpen ? t.hideList : t.viewList}
+                {listOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </button>
+            </div>
+          </div>
+
+          <div
+            className={`relative grid transition-[grid-template-rows] duration-300 ease-out ${
+              listOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+            }`}
+          >
+            <div className="overflow-hidden">
+              <div className="border-t border-gold/25 bg-ivory/95 px-3 py-4 sm:px-5 sm:py-5">
+                {error && (
+                  <p className="mb-4 rounded-2xl border border-maroon/20 bg-ivory py-4 text-center text-sm text-maroon">
+                    {error}
+                  </p>
+                )}
+
+                {loading ? (
+                  <div className="flex justify-center py-14 text-maroon">
+                    <Loader2 className="animate-spin" size={32} />
+                  </div>
+                ) : (
+                  <>
+                    <div className="hidden max-h-[70vh] overflow-hidden rounded-2xl border border-gold/40 bg-ivory shadow-[0_12px_40px_rgba(63,15,26,0.08)] md:block">
+                      <div className="h-full max-h-[70vh] overflow-auto">
+                        <table className="w-full min-w-[780px] text-left text-sm">
+                          <thead className="sticky top-0 z-10">
+                            <tr className="bg-maroon text-ivory">
+                              <th className="px-4 py-3.5 font-semibold">{t.sno}</th>
+                              <th className="px-4 py-3.5 font-semibold">{t.mno}</th>
+                              <th className="px-4 py-3.5 font-semibold">{t.type}</th>
+                              <th className="px-4 py-3.5 font-semibold">{t.name}</th>
+                              <th className="px-4 py-3.5 font-semibold">{t.address}</th>
+                              <th className="px-4 py-3.5 font-semibold">{t.mobile}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {pageRows.length === 0 ? (
+                              <tr>
+                                <td
+                                  colSpan={6}
+                                  className="px-4 py-10 text-center text-ink-muted"
+                                >
+                                  {t.noResults}
+                                </td>
+                              </tr>
+                            ) : (
+                              pageRows.map((m, idx) => (
+                                <tr
+                                  key={
+                                    m.ID || `${m.TYPE}-${m['S.No.']}-${m['M.No.']}`
+                                  }
+                                  className={`border-t border-maroon/8 transition hover:bg-gold/10 ${
+                                    idx % 2 === 0 ? 'bg-ivory' : 'bg-ivory-deep/50'
+                                  }`}
+                                >
+                                  <td className="px-4 py-3 text-ink-muted">
+                                    {m['S.No.']}
+                                  </td>
+                                  <td className="px-4 py-3 font-medium text-maroon">
+                                    {m['M.No.']}
+                                  </td>
+                                  <td className="px-4 py-3">
+                                    <span className="rounded-full bg-maroon/8 px-2.5 py-0.5 text-[11px] font-semibold text-maroon-soft">
+                                      {typeLabel(m.TYPE)}
+                                    </span>
+                                  </td>
+                                  <td className="px-4 py-3 font-semibold text-ink">
+                                    {m['VARSHIK MEMBER NAME']}
+                                  </td>
+                                  <td className="max-w-xs px-4 py-3 text-ink-muted">
+                                    {m.ADDRESS}
+                                  </td>
+                                  <td className="px-4 py-3">
+                                    {m.MOBILE ? (
+                                      <a
+                                        href={`tel:${String(m.MOBILE).replace(/\D/g, '')}`}
+                                        className="text-maroon-soft hover:underline"
+                                      >
+                                        {m.MOBILE}
+                                      </a>
+                                    ) : (
+                                      '—'
+                                    )}
+                                  </td>
+                                </tr>
+                              ))
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div className="max-h-[70vh] space-y-3 overflow-y-auto md:hidden">
+                      {pageRows.length === 0 ? (
+                        <p className="rounded-2xl border border-maroon/10 bg-ivory py-10 text-center text-ink-muted">
+                          {t.noResults}
+                        </p>
+                      ) : (
+                        pageRows.map((m) => (
+                          <button
+                            key={m.ID || `${m.TYPE}-${m['S.No.']}-${m['M.No.']}`}
+                            type="button"
+                            onClick={() => setSelected(m)}
+                            className="w-full rounded-2xl border border-gold/40 bg-ivory p-4 text-left shadow-sm transition active:scale-[0.99]"
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <div>
+                                <p className="font-semibold text-maroon">
+                                  {m['VARSHIK MEMBER NAME']}
+                                </p>
+                                <p className="mt-1 text-xs text-ink-muted">
+                                  {t.mno}:{' '}
+                                  <span className="font-medium text-ink">
+                                    {m['M.No.']}
+                                  </span>
+                                  {' · '}
+                                  {t.sno}: {m['S.No.']}
+                                </p>
+                              </div>
+                              <span className="shrink-0 rounded-full bg-maroon/8 px-2 py-0.5 text-[10px] font-semibold text-maroon-soft">
+                                {typeLabel(m.TYPE)}
+                              </span>
+                            </div>
+                            <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-ink-muted">
+                              {m.ADDRESS}
+                            </p>
+                            <p className="mt-2 text-sm font-medium text-maroon-soft">
+                              {m.MOBILE || '—'}
+                            </p>
+                          </button>
+                        ))
+                      )}
+                    </div>
+
+                    {filtered.length > PAGE_SIZE && (
+                      <div className="mt-5 flex items-center justify-center gap-3">
+                        <button
+                          type="button"
+                          disabled={currentPage <= 1}
+                          onClick={() => setPage((p) => Math.max(1, p - 1))}
+                          className="inline-flex items-center gap-1 rounded-full border border-gold/40 bg-ivory px-5 py-2.5 text-sm font-medium text-maroon disabled:opacity-40"
+                        >
+                          <ChevronLeft size={16} />
+                          {t.prev}
+                        </button>
+                        <span className="text-sm text-ink-muted">
+                          {currentPage} / {totalPages}
+                        </span>
+                        <button
+                          type="button"
+                          disabled={currentPage >= totalPages}
+                          onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                          className="inline-flex items-center gap-1 rounded-full border border-gold/40 bg-ivory px-5 py-2.5 text-sm font-medium text-maroon disabled:opacity-40"
+                        >
+                          {t.next}
+                          <ChevronRight size={16} />
+                        </button>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
-
-        {error && (
-          <p className="mb-4 rounded-2xl border border-maroon/20 bg-ivory py-4 text-center text-sm text-maroon">
-            {error}
-          </p>
-        )}
-
-        {loading ? (
-          <div className="flex justify-center py-14 text-maroon">
-            <Loader2 className="animate-spin" size={32} />
-          </div>
-        ) : (
-          <>
-            <div className="hidden h-[100vh] overflow-hidden rounded-2xl border border-gold/40 bg-ivory shadow-[0_12px_40px_rgba(63,15,26,0.08)] md:block">
-              <div className="h-full overflow-auto">
-                <table className="w-full min-w-[780px] text-left text-sm">
-                  <thead className="sticky top-0 z-10">
-                    <tr className="bg-maroon text-ivory">
-                      <th className="px-4 py-3.5 font-semibold">{t.sno}</th>
-                      <th className="px-4 py-3.5 font-semibold">{t.mno}</th>
-                      <th className="px-4 py-3.5 font-semibold">{t.type}</th>
-                      <th className="px-4 py-3.5 font-semibold">{t.name}</th>
-                      <th className="px-4 py-3.5 font-semibold">{t.address}</th>
-                      <th className="px-4 py-3.5 font-semibold">{t.mobile}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {pageRows.length === 0 ? (
-                      <tr>
-                        <td colSpan={6} className="px-4 py-10 text-center text-ink-muted">
-                          {t.noResults}
-                        </td>
-                      </tr>
-                    ) : (
-                      pageRows.map((m, idx) => (
-                        <tr
-                          key={m.ID || `${m.TYPE}-${m['S.No.']}-${m['M.No.']}`}
-                          className={`border-t border-maroon/8 transition hover:bg-gold/10 ${
-                            idx % 2 === 0 ? 'bg-ivory' : 'bg-ivory-deep/50'
-                          }`}
-                        >
-                          <td className="px-4 py-3 text-ink-muted">{m['S.No.']}</td>
-                          <td className="px-4 py-3 font-medium text-maroon">{m['M.No.']}</td>
-                          <td className="px-4 py-3">
-                            <span className="rounded-full bg-maroon/8 px-2.5 py-0.5 text-[11px] font-semibold text-maroon-soft">
-                              {typeLabel(m.TYPE)}
-                            </span>
-                          </td>
-                          <td className="px-4 py-3 font-semibold text-ink">
-                            {m['VARSHIK MEMBER NAME']}
-                          </td>
-                          <td className="max-w-xs px-4 py-3 text-ink-muted">{m.ADDRESS}</td>
-                          <td className="px-4 py-3">
-                            {m.MOBILE ? (
-                              <a
-                                href={`tel:${String(m.MOBILE).replace(/\D/g, '')}`}
-                                className="text-maroon-soft hover:underline"
-                              >
-                                {m.MOBILE}
-                              </a>
-                            ) : (
-                              '—'
-                            )}
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="h-[100vh] space-y-3 overflow-y-auto md:hidden">
-              {pageRows.length === 0 ? (
-                <p className="rounded-2xl border border-maroon/10 bg-ivory py-10 text-center text-ink-muted">
-                  {t.noResults}
-                </p>
-              ) : (
-                pageRows.map((m) => (
-                  <button
-                    key={m.ID || `${m.TYPE}-${m['S.No.']}-${m['M.No.']}`}
-                    type="button"
-                    onClick={() => setSelected(m)}
-                    className="w-full rounded-2xl border border-gold/40 bg-ivory p-4 text-left shadow-sm transition active:scale-[0.99]"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="font-semibold text-maroon">
-                          {m['VARSHIK MEMBER NAME']}
-                        </p>
-                        <p className="mt-1 text-xs text-ink-muted">
-                          {t.mno}:{' '}
-                          <span className="font-medium text-ink">{m['M.No.']}</span>
-                          {' · '}
-                          {t.sno}: {m['S.No.']}
-                        </p>
-                      </div>
-                      <span className="shrink-0 rounded-full bg-maroon/8 px-2 py-0.5 text-[10px] font-semibold text-maroon-soft">
-                        {typeLabel(m.TYPE)}
-                      </span>
-                    </div>
-                    <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-ink-muted">
-                      {m.ADDRESS}
-                    </p>
-                    <p className="mt-2 text-sm font-medium text-maroon-soft">
-                      {m.MOBILE || '—'}
-                    </p>
-                  </button>
-                ))
-              )}
-            </div>
-
-            {filtered.length > PAGE_SIZE && (
-              <div className="mt-6 flex items-center justify-center gap-3">
-                <button
-                  type="button"
-                  disabled={currentPage <= 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  className="inline-flex items-center gap-1 rounded-full border border-gold/40 bg-ivory px-5 py-2.5 text-sm font-medium text-maroon disabled:opacity-40"
-                >
-                  <ChevronLeft size={16} />
-                  {t.prev}
-                </button>
-                <span className="text-sm text-ink-muted">
-                  {currentPage} / {totalPages}
-                </span>
-                <button
-                  type="button"
-                  disabled={currentPage >= totalPages}
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  className="inline-flex items-center gap-1 rounded-full border border-gold/40 bg-ivory px-5 py-2.5 text-sm font-medium text-maroon disabled:opacity-40"
-                >
-                  {t.next}
-                  <ChevronRight size={16} />
-                </button>
-              </div>
-            )}
-          </>
-        )}
       </div>
 
       {selected && (
@@ -312,19 +353,29 @@ export default function Members() {
             <div className="gold-line mt-3 w-16" />
             <dl className="mt-5 space-y-3 text-sm">
               <div>
-                <dt className="text-xs tracking-wider text-ink-muted uppercase">{t.sno}</dt>
+                <dt className="text-xs tracking-wider text-ink-muted uppercase">
+                  {t.sno}
+                </dt>
                 <dd className="font-medium text-ink">{selected['S.No.']}</dd>
               </div>
               <div>
-                <dt className="text-xs tracking-wider text-ink-muted uppercase">{t.mno}</dt>
+                <dt className="text-xs tracking-wider text-ink-muted uppercase">
+                  {t.mno}
+                </dt>
                 <dd className="font-medium text-ink">{selected['M.No.']}</dd>
               </div>
               <div>
-                <dt className="text-xs tracking-wider text-ink-muted uppercase">{t.address}</dt>
-                <dd className="font-medium leading-relaxed text-ink">{selected.ADDRESS}</dd>
+                <dt className="text-xs tracking-wider text-ink-muted uppercase">
+                  {t.address}
+                </dt>
+                <dd className="font-medium leading-relaxed text-ink">
+                  {selected.ADDRESS}
+                </dd>
               </div>
               <div>
-                <dt className="text-xs tracking-wider text-ink-muted uppercase">{t.mobile}</dt>
+                <dt className="text-xs tracking-wider text-ink-muted uppercase">
+                  {t.mobile}
+                </dt>
                 <dd>
                   {selected.MOBILE ? (
                     <a
