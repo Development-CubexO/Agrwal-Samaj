@@ -16,25 +16,43 @@ export default function Footer() {
 
   return (
     <>
-      <div className="w-full border-t border-gold/25 bg-[#f7f2ea]">
+      <div className="w-full  px-4 py-4 sm:px-6 sm:py-5">
         <a
           href="https://www.cubexo.io"
           target="_blank"
           rel="noopener noreferrer"
-          className="mx-auto flex w-full max-w-[1400px] items-center justify-center gap-2 px-4 py-2.5 text-center transition hover:bg-[#efe8dc] sm:gap-2.5 sm:px-6 sm:py-3"
+          className="group mx-auto block w-full max-w-4xl transition hover:opacity-95"
         >
-          <span className="text-[11px] font-medium tracking-wide text-maroon-deep/70 sm:text-xs">
-            Designed &amp; Developed by
-          </span>
-          <img
-            src={cubexoLogo}
-            alt="Cubexo"
-            className="h-4 w-auto sm:h-5"
-          />
-          <span className="hidden text-maroon-deep/25 sm:inline">·</span>
-          <span className="text-[11px] font-semibold text-[#1a9fd8] sm:text-xs">
-            www.cubexo.io
-          </span>
+          <div className="overflow-hidden rounded-2xl border border-gold/55 bg-[#fffaf2] shadow-[0_10px_32px_rgba(63,15,26,0.08)]">
+            <div className="flex min-h-[92px] items-stretch sm:min-h-[108px]">
+              <div className="flex w-[34%] min-w-[140px] items-center justify-center px-3 py-4 sm:w-[28%] sm:px-5 sm:py-5">
+                <img
+                  src={cubexoLogo}
+                  alt="Cubexo"
+                  className="h-14 w-auto object-contain sm:h-20 lg:h-24"
+                />
+              </div>
+
+              <div className="relative flex w-px shrink-0 items-center justify-center">
+                <div className="absolute inset-y-4 w-px bg-linear-to-b from-transparent via-gold/70 to-transparent" />
+                <span className="relative z-10 text-[10px] text-gold">◆</span>
+              </div>
+
+              <div className="flex flex-1 items-center justify-center px-4 py-4 text-center sm:px-8 sm:py-5">
+                <div>
+                  <p className="font-display text-xl font-extrabold leading-tight tracking-tight text-[#1f4f7a] transition  sm:text-3xl lg:text-4xl">
+                    Cubexo Software Solutions
+                  </p>
+                  <p className="mt-1.5 text-[11px] font-medium leading-snug text-maroon-deep/65 sm:mt-2 sm:text-sm">
+                    2nd Floor, MR Business Park, Rani Bagh Main, Indore, Madhya Pradesh 452001
+                  </p>
+                  <p className="mt-1 text-[11px] font-medium tracking-wide text-[#1a30d8] sm:text-sm">
+                    www.cubexo.io
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </a>
       </div>
 
