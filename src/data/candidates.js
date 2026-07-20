@@ -56,7 +56,7 @@ export const padadhikari = [
     name: { hi: 'श्याम सुंदर गोयल', en: 'Shyam Sundar Goyal' },
     post: { hi: 'अध्यक्ष पद हेतु', en: 'For President' },
     detail: {
-      hi: '(संजय गोयल अनाज मंडी, नथ्ठू भगवती)',
+      hi: '(संजय गोयल अनाज मंडी, नत्थू भगवती)',
       en: '(Sanjay Goyal Anaj Mandi, Nathhu Bhagwati)',
     },
     photo: shyamSunder,
@@ -175,8 +175,6 @@ export const padadhikari = [
     nameEn: 'Prayog Garg',
     postHi: 'कोषाध्यक्ष पद हेतु',
     postEn: 'For Treasurer',
-    detailHi: '(जूनी इन्दौर)',
-    detailEn: '(Juni Indore)',
     photo: prayog,
     initials: 'प्रग',
     rolesHi: [
@@ -525,8 +523,6 @@ export const purushKaryakarini = [
     id: 'pur-8',
     nameHi: 'संजय बदरुका',
     nameEn: 'Sanjay Badruka',
-    detailHi: '(बदरुका)',
-    detailEn: '(Badruka)',
     postHi: 'कार्यकारिणी पद हेतु',
     postEn: 'For Executive Committee',
     photo: sanjay,

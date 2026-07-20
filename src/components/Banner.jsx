@@ -3,9 +3,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import banner1 from '../assets/banner/Banner.png'
 import banner2 from '../assets/banner/Banner2.png'
 import banner3 from '../assets/banner/Banner4.png'
-import PalaceCorners from './PalaceCorners'
 
-const SLIDE_IMAGES = [banner1, banner2, banner3 ]
+const SLIDE_IMAGES = [banner1, banner2, banner3]
 
 export default function Banner() {
   const [index, setIndex] = useState(0)
@@ -22,10 +21,6 @@ export default function Banner() {
 
   return (
     <section id="home" className="relative w-full overflow-hidden">
-      {/* Gold frame edge */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-[3px] bg-linear-to-r from-transparent via-gold to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[3px] bg-linear-to-r from-transparent via-gold to-transparent" />
-
       <div className="relative">
         {SLIDE_IMAGES.map((src, i) => (
           <div
@@ -44,13 +39,6 @@ export default function Banner() {
             />
           </div>
         ))}
-
-        <div className="pointer-events-none absolute inset-0 z-[5] palace-frame">
-          <PalaceCorners size="lg" />
-        </div>
-
-        {/* Soft vignette for premium depth */}
-        <div className="pointer-events-none absolute inset-0 z-[4] bg-linear-to-t from-maroon-deep/35 via-transparent to-maroon-deep/15" />
       </div>
 
       <button

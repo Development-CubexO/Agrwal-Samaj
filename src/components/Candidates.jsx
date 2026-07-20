@@ -171,45 +171,57 @@ export default function Candidates() {
           <PalaceCorners />
           <div className="mb-8">
             <SectionBadge>{t.padadhikariTitle}</SectionBadge>
-            <div className="grid grid-cols-2 items-stretch gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-5">
               {otherPadadhikari.map((c, i) => (
-                <CandidateCard
+                <div
                   key={c.id}
-                  candidate={c}
-                  size="large"
-                  onSelect={setSelected}
-                  delay={i * 40}
-                />
+                  className="w-[calc(50%-0.375rem)] sm:w-[calc(33.333%-0.875rem)] lg:w-[calc(25%-1.125rem)]"
+                >
+                  <CandidateCard
+                    candidate={c}
+                    size="large"
+                    onSelect={setSelected}
+                    delay={i * 40}
+                  />
+                </div>
               ))}
             </div>
           </div>
 
           <div className="mb-8">
             <SectionBadge>{t.purushTitle}</SectionBadge>
-            <div className="grid grid-cols-3 items-stretch gap-2 sm:grid-cols-5 sm:gap-4">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
               {purushKaryakarini.map((c, i) => (
-                <CandidateCard
+                <div
                   key={c.id}
-                  candidate={c}
-                  size="small"
-                  onSelect={setSelected}
-                  delay={i * 30}
-                />
+                  className="w-[calc(33.333%-0.35rem)] sm:w-[calc(20%-0.8rem)]"
+                >
+                  <CandidateCard
+                    candidate={c}
+                    size="small"
+                    onSelect={setSelected}
+                    delay={i * 30}
+                  />
+                </div>
               ))}
             </div>
           </div>
 
           <div className="mb-7">
             <SectionBadge>{t.mahilaTitle}</SectionBadge>
-            <div className="mx-auto grid max-w-md grid-cols-3 items-stretch gap-3 sm:max-w-lg sm:gap-5">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-5">
               {mahilaKaryakarini.map((c, i) => (
-                <CandidateCard
+                <div
                   key={c.id}
-                  candidate={c}
-                  size="small"
-                  onSelect={setSelected}
-                  delay={i * 40}
-                />
+                  className="w-[calc(33.333%-0.5rem)] max-w-[160px] sm:max-w-[180px]"
+                >
+                  <CandidateCard
+                    candidate={c}
+                    size="small"
+                    onSelect={setSelected}
+                    delay={i * 40}
+                  />
+                </div>
               ))}
             </div>
           </div>
