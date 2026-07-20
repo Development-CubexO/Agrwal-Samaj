@@ -60,6 +60,13 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2.5">
+          <a
+            href="#members"
+            className="inline-flex max-w-[7.5rem] items-center truncate rounded-full border border-gold/50 bg-gold px-2.5 py-1.5 text-[11px] font-extrabold text-maroon-deep shadow-sm transition hover:bg-gold-light sm:max-w-none sm:px-3.5 sm:text-[13px]"
+          >
+            {t.membersTitle}
+          </a>
+
           <div
             className="flex items-center rounded-full border border-gold/45 bg-maroon-deep/50 p-0.5 text-xs font-semibold shadow-inner"
             role="group"
