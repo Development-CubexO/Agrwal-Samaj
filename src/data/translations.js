@@ -90,6 +90,12 @@ export const translations = {
     footerNote: 'श्री अग्रवाल समाज केन्द्रीय समिति चुनाव समिति',
     rights: 'सर्वाधिकार सुरक्षित',
     backToTop: 'ऊपर जाएँ',
+    thankYouBadge: 'चुनाव 2026 · विजय',
+    thankYouTitle: 'धन्यवाद',
+    thankYouVictory: 'आपके अटूट समर्थन से मिली इस विजय के लिए हार्दिक आभार',
+    thankYouMessage:
+      'समाज के प्रत्येक सदस्य का हृदय से धन्यवाद। आपके विश्वास ने हमें सेवा का यह अवसर दिया है। हम मिलकर एकता, विकास और सद्भाव का नया अध्याय लिखेंगे।',
+    thankYouBlessing: 'जय अग्रसेन · जय खाटू श्याम जी',
     visionItems: [
       {
         title: 'समाज में एकता',
@@ -208,6 +214,12 @@ export const translations = {
     footerNote: 'Shree Agrawal Samaj Kendriya Samiti Election Committee',
     rights: 'All rights reserved',
     backToTop: 'Back to top',
+    thankYouBadge: 'Election 2026 · Victory',
+    thankYouTitle: 'Thank You',
+    thankYouVictory: 'Heartfelt gratitude for this victory made possible by your unwavering support',
+    thankYouMessage:
+      'Our deepest thanks to every member of the samaj. Your trust has given us this opportunity to serve. Together we will write a new chapter of unity, progress and harmony.',
+    thankYouBlessing: 'Jai Agrasen · Jai Khatu Shyam Ji',
     visionItems: [
       {
         title: 'Community Unity',

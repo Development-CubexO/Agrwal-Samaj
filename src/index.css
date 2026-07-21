@@ -12,7 +12,7 @@
   --color-ink: #2a1810;
   --color-ink-muted: #5a4638;
   --color-brown: #3d2914;
-  --font-display: "Cormorant Garamond", "Sarpanch", serif;
+  --font-display: "Cinzel", "Sarpanch", serif;
   --font-hindi: "Sarpanch", "Tillana", sans-serif;
   --font-body: "Josefin Sans", "Tillana", sans-serif;
   --font-body-hi: "Tillana", "Sarpanch", sans-serif;
@@ -589,6 +589,83 @@ body.lang-hi {
   }
 }
 
+/* ——— Thank You / Victory ——— */
+.thankyou-enter {
+  animation: thankyouEnter 0.9s ease-out both;
+}
+
+.thankyou-title {
+  text-shadow: 0 0 28px rgba(240, 224, 168, 0.35);
+  animation: thankyouGlow 3.2s ease-in-out infinite;
+}
+
+.thankyou-logo-ring {
+  animation: thankyouLogoIn 0.85s ease-out both, pulseGold 3.5s ease-in-out 0.9s infinite;
+}
+
+.thankyou-shimmer {
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(240, 224, 168, 0.08) 48%,
+    transparent 62%
+  );
+  background-size: 220% 100%;
+  animation: shimmer 7s linear infinite;
+}
+
+.thankyou-sparkles {
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(240, 224, 168, 0.55) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 78% 28%, rgba(240, 224, 168, 0.4) 0 1px, transparent 2px),
+    radial-gradient(circle at 62% 72%, rgba(240, 224, 168, 0.5) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 28% 78%, rgba(240, 224, 168, 0.35) 0 1px, transparent 2px),
+    radial-gradient(circle at 88% 58%, rgba(240, 224, 168, 0.45) 0 1.5px, transparent 2.5px);
+  animation: thankyouSparkle 4s ease-in-out infinite;
+}
+
+@keyframes thankyouEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes thankyouLogoIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes thankyouGlow {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.12);
+  }
+}
+
+@keyframes thankyouSparkle {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .mandala-spin,
   .mandala-spin-reverse,
@@ -598,7 +675,12 @@ body.lang-hi {
   .fade-up,
   .splash-glow,
   .splash-logo-wrap,
-  .splash-copy {
+  .splash-copy,
+  .thankyou-enter,
+  .thankyou-title,
+  .thankyou-logo-ring,
+  .thankyou-shimmer,
+  .thankyou-sparkles {
     animation: none;
   }
 
